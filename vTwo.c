@@ -1,6 +1,6 @@
-#pragma config(Sensor, in2,    leftLine,       sensorReflection)
-#pragma config(Sensor, in3,    middleLine,     sensorReflection)
-#pragma config(Sensor, in4,    rightLine,      sensorReflection)
+#pragma config(Sensor, in2,    leftLine,       sensorLineFollower)
+#pragma config(Sensor, in3,    middleLine,     sensorLineFollower)
+#pragma config(Sensor, in4,    rightLine,      sensorLineFollower)
 #pragma config(Sensor, dgtl1,  startButton,    sensorTouch)
 #pragma config(Motor,  port1,           motor1,        tmotorVex269_HBridge, openLoop)
 #pragma config(Motor,  port2,           motor2,        tmotorVex269_MC29, openLoop, reversed)
@@ -9,11 +9,11 @@
 
 bool light1Activated = false;
 
-
 task main()
 {
 
 bool buttonStop = false;
+
 
 
 	while(1==1)
@@ -21,13 +21,16 @@ bool buttonStop = false;
 		//start forward motors
 		 if (SensorValue(startButton) == 1 && buttonStop == false)
 		{
+			wait(1);
 			//
-			if (SensorValue[leftLine] > 2500) 
+			while (SensorValue[leftLine] > 3000) 
 			{
-				light1Activated = true;
-				startMotor(turnMotor, 127);
-			}
+				startMotor(turnMotor);
+		  }
+		  stopMotor(turnMotor);
+				
+			
 		}
-	buttonStop = false;
-	}
+
+}
 }
